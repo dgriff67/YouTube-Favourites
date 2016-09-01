@@ -25,7 +25,10 @@ require_once '.\vendor\autoload.php';
    * Google Developers Console <https://console.developers.google.com/>
    * Please ensure that you have enabled the YouTube Data API for your project.
    */
-  $DEVELOPER_KEY = 'AIzaSyCiFuJxg2zt20dZgRyw5Q7w1sajIORrBEg';
+   $config = parse_ini_file("config.ini",true);
+   $DEVELOPER_KEY = $config['GoogleDeveloperKey']['Developer_Key'];
+                    
+  //$DEVELOPER_KEY = 'AIzaSyCiFuJxg2zt20dZgRyw5Q7w1sajIORrBEg';
 
   $client = new Google_Client();
   $client->setDeveloperKey($DEVELOPER_KEY);
