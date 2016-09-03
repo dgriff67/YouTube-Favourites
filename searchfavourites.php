@@ -2,21 +2,20 @@
 <html>
   <head>
     <title>Search YouTube Favourites</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href = "css/youtube_favourites.css" rel = "stylesheet">
   </head>
   <body>
     <h3>Search Your YouTube Favourites</h3>
     <form action="searchfavourites.php" method="POST">
-    <table cellpadding="6">
-        <tbody>
-            <tr>
-                <td>Title:</td>
-                <td><INPUT type="input" name="searchtitle"></td>
-            </tr>
-            <td></td>
-            <td><INPUT type="submit" name="submit" value="Submit"></td>
-        </tbody>
-    </table>
+        <div class="form-group">
+            <label for="searchtitle">Search:</label>
+            <input type="text" class="form-control" name="searchtitle" placeholder="Enter Search Term">
+        </div>
+            <button type="submit" class= btn btn-default" name="submit">Submit</button>
     </form>
     <?php
     $query = "select * from favourites ";
@@ -48,26 +47,27 @@
         } else {
             //echo "We found " . $favouritecount . " favourites matching your search term!";
             printf('<form action="deletefavourite.php" method="POST">');
-            printf('<table cellpadding="6">');
-            printf('<tbody>');
+            printf('<div class="form-group">');
+            printf('<ul class="list-group">');
             while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
                 //We add an anchor tag for playing the video
-                $playanchor = '<a href="http://www.youtube.com/watch?v='
-                .urldecode($row["videoid"]). '" target=_blank> Play </a>';
-                //We add a checkbox for deleting favourites.
                 $checkbox = '<input type="checkbox" name="favourite[]" id="favourite" value="'. urldecode($row["videoid"]) .'">';
-                printf("<tr><td>%s</td><td>%s </td><td>%s</td>",
+                $title = htmlentities($row["title"]);
+                $playanchor = '<a href="http://www.youtube.com/watch?v='.urldecode($row["videoid"]). '" target=_blank> Play </a>';
+                //We add a checkbox for deleting favourites.
+                printf('<li class="list-group-item">%s %s %s</li>',
                 $checkbox,
-                htmlentities($row["title"]),
+                $title,
                 $playanchor);             
             }
+            printf('</ul>');
+            printf('</div>');
         }
     } catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
     }
-    printf('<tr><td></td><td><INPUT type="submit" name="delete" value="Delete"></td></tr>');
-    printf('</tbody>');
-    printf('</table>');
+    printf('<button type="submit" class= btn btn-default" name="submit">Delete</button>');
+    //printf('<tr><td></td><td><INPUT type="submit" name="delete" value="Delete"></td></tr>');
     
     ?>
   </body>
