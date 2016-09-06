@@ -1,7 +1,23 @@
-<?php
+  <head>
+    <title>Search YouTube Favourites</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href = "css/youtube_favourites.css" rel = "stylesheet">
+  </head>
+  <body>
+  
 
-if (str_word_count($_POST['tag'])>1) {
-    printf("Single word tags only please");
+<?php
+if ((!isset($_POST['tag'])) || ($_POST['tag']=="")) {
+    printf("<h3>Slight Problem</h3>");
+    printf("<p>Please enter new tag</p>");
+    printf("<a href=managetags.php> Manage Tags</a>");
+}
+else if (str_word_count($_POST['tag'])>1) {
+    printf("<h3>Slight Problem</h3>");
+    printf("<p>Single word tags only please</p>");
     printf("<a href=managetags.php> Manage Tags</a>");
 }
     else if ((isset($_POST['tag'])) && (str_word_count($_POST['tag'])<2)) {
@@ -22,7 +38,8 @@ if (str_word_count($_POST['tag'])>1) {
         $stmt->execute();
         
         $stmt->closeCursor();
-        printf("New tag '". $_POST['tag'] . "' added");
+        printf("<h3>Success!</h3>");
+        printf("<p>Your new tag '". $_POST['tag'] . "' has been added</p>");
         printf("<a href=managetags.php> Manage Tags</a>");
         } 
         catch (PDOException $e) {
@@ -37,3 +54,5 @@ if (str_word_count($_POST['tag'])>1) {
     }
 
 ?>
+  </body>
+</html>

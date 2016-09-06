@@ -55,7 +55,7 @@ require_once '.\vendor\autoload.php';
     foreach ($searchResponse['items'] as $searchResult) {
       switch ($searchResult['id']['kind']) {
         case 'youtube#video':  
-          $videos .= sprintf(' <li class="list-group-item"><input type="checkbox" name="favourite[]" id="favourite" value="%s:%s"> %s (%s)</li>', $searchResult['snippet']['title'], $searchResult['id']['videoId'], $searchResult['snippet']['title'],    
+          $videos .= sprintf(' <li class="list-group-item"><input type="radio" name="favourite[]" id="favourite" value="%s:%s"> %s (%s)</li>', $searchResult['snippet']['title'], $searchResult['id']['videoId'], $searchResult['snippet']['title'],    
           "<a href=http://www.youtube.com/watch?v=".$searchResult['id']['videoId']." target=_blank> Watch This Video</a>"); 
           break;  
       }
@@ -63,7 +63,7 @@ require_once '.\vendor\autoload.php';
     //More Heredoc
     $htmlBody .= <<<END
     <h3>Videos</h3>
-    <form action="addfavourite.php" method = "POST">
+    <form action="editfavourite.php" method = "POST">
         <div class="form-group">
             <ul class="list-group">
                 $videos

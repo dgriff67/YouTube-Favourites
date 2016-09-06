@@ -2,21 +2,20 @@
 <html>
   <head>
     <title>Manage Your Tags</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href = "css/youtube_favourites.css" rel = "stylesheet">
   </head>
   <body>
   <h3>Manage Your Favourites Tags</h3>
     <form action="addtag.php" method="POST">
-    <table cellpadding="6">
-        <tbody>
-            <tr>
-                <td>Tag:</td>
-                <td><INPUT type="input" name="tag"></td>
-            </tr>
-            <td></td>
-            <td><INPUT type="submit" name="add" value="Add"></td>
-        </tbody>
-    </table>
+    <div class="form-group">
+        <label for="tag">New Tag:</label>
+        <input type="text" class="form-control" name="tag" placeholder="Enter New Tag">
+    </div>
+        <button type="submit" class= btn btn-default" name="submit">Add</button>
     </form>
    
     <?php
@@ -37,27 +36,29 @@
         $stmt = $db->query($query);
         $tagcount = $stmt->rowCount();
         if ($tagcount == 0) {
-            echo "Sorry, no favourites matching your search term";
+            echo "Sorry, no tags matching your search term";
             exit;
         } else {
             printf('<form action="deletetag.php" method="POST">');
-            printf('<table cellpadding="6">');
-            printf('<tbody>');
+            printf('<div class="form-group">');
+            printf('<ul class="list-group">');
+            
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 //We add a checkbox for deleting tags.
                 $checkbox = '<input type="checkbox" name="tag[]" id="tag" value="'. urldecode($row["tagid"]) .'">';
-                printf("<tr><td>%s</td><td>%s </td>",
+                $tagname = htmlentities($row["tag"]);
+                printf('<li class="list-group-item">%s %s </li>',
                 $checkbox,
-                htmlentities($row["tag"])
+                $tagname
                 );             
             }
+            printf('</ul>');
+            printf('</div>');
         }
     } catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
     }
-    printf('<tr><td></td><td><INPUT type="submit" name="delete" value="Delete"></td></tr>');
-    printf('</tbody>');
-    printf('</table>');
+    printf('<button type="submit" class= btn btn-default" name="delete">Delete</button>');
     
     ?>
   </body>
