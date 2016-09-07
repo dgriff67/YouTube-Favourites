@@ -50,10 +50,10 @@
             printf('<div class="form-group">');
             printf('<ul class="list-group">');
             while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
-                //We want to look up all the associated tags
+                //We want to look up all the associated tags and build a string of these tags
                 $query2 = "select * FROM tags INNER JOIN favourite_tags ON tags.tagid = favourite_tags.tagid_FK ";
                 $whereclause = "WHERE ((favourite_tags.favouriteid_FK)=" . htmlentities($row['favourite_id']) . ")";
-                $query2 = $query2 . $whereclause;
+                $query2 .= $whereclause;
                 $stmt = $db->query($query2);
                 $tag_string =  "";
                 while ($row2 = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -61,7 +61,7 @@
                     $tag_string .= $row2['tag'];
                 }
                 //We add an anchor tag for playing the video
-                $checkbox = '<input type="checkbox" name="favourite" id="favourite" value="'. urldecode($row["videoid"]) .'">';
+                $checkbox = '<input type="checkbox" name="favourite" id="favourite" value="'. urldecode($row["favourite_id"]) .'">';
                 $title = htmlentities($row["title"]);
                 $playanchor = '<a href="http://www.youtube.com/watch?v='.urldecode($row["videoid"]). '" target=_blank> Play </a>';
                 //We add a checkbox for deleting favourites.
