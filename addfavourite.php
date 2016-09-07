@@ -1,11 +1,12 @@
 <?php
-
-$title = $_POST['edittedtitle'];
-$videoid = $_POST['videoid'];
-$tags = $_POST['tag'];
-
-    if((isset($title)) && (isset($videoid))) {
-    //$name = $_POST['edittedtitle'];
+if((!isset($_POST['tag']) || $_POST['tag']=="")) {
+    //if not tags selected we set this variable to empty
+    $tags = "";
+} else if((isset($_POST['edittedtitle'])) && (isset($_POST['videoid'])) && (isset($_POST['tag']))) {
+    $title = $_POST['edittedtitle'];
+    $videoid = $_POST['videoid'];
+    $tags = $_POST['tag'];
+   //$name = $_POST['edittedtitle'];
     //First we add a new favourite
         try {
             //connection details for database held in config.ini file
@@ -40,7 +41,7 @@ $tags = $_POST['tag'];
         catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
         }
-    } // end brace for if(isset
+    } 
         
     else {
 
