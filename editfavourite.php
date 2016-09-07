@@ -27,6 +27,11 @@ foreach ($name as $favourite){
             <textarea cols="30" rows="3" class="form-control" name="edittedtitle"><?php echo $title ?></textarea>
             <input type="hidden" name="videoid" value="<?php echo $videoid ?>">
         </div>
+        <div class="form-group" class="col-xs-4">
+            <label for="newtags">New tag:</label>
+            <input type="text" class="form-control" name="newtags" placeholder="Enter new tags, like: tag1, tag2">
+        </div>
+ 
     <?php
      #Open database
     try {
@@ -45,8 +50,8 @@ foreach ($name as $favourite){
         $stmt = $db->query($query);
         $tagcount = $stmt->rowCount();
         if ($tagcount == 0) {
-            echo "Sorry, no tags matching your search term";
-            exit;
+            //echo "Sorry, no tags matching your search term";
+            //exit;
         } else {
             printf('<div class="form-group">');
             printf('<ul class="list-group">');
@@ -62,11 +67,12 @@ foreach ($name as $favourite){
             printf('</ul>');
             printf('</div>');
         }
+        
     } catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
     }
-    
     ?>
+    
             <button type="submit" class= btn btn-default" name="submit">Submit</button>
     </form>
    </body>
