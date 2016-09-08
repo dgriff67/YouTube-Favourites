@@ -54,17 +54,16 @@ foreach ($name as $favourite){
             //exit;
         } else {
             printf('<div class="form-group">');
-            printf('<ul class="list-group">');
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 //We add a checkbox for deleting tags.
                 $checkbox = '<input type="checkbox" name="tag[]" id="tag" value="'. urldecode($row["tagid"]) .'">';
                 $tagname = htmlentities($row["tag"]);
-                printf('<li class="list-group-item">%s %s </li>',
+                //printf('<li class="list-group-item">%s %s </li>',
+                printf('<label class="checkbox-inline">%s %s </label>',
                 $checkbox,
                 $tagname
                 );             
             }
-            printf('</ul>');
             printf('</div>');
         }
         
