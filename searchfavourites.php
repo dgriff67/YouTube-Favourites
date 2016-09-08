@@ -15,10 +15,50 @@
             <label for="searchtitle">Search:</label>
             <input type="text" class="form-control" name="searchtitle" placeholder="Enter Search Term">
         </div>
-            <button type="submit" class= "btn btn-primary" name="submit">Submit</button>
-    </form>
-    <br>
+            
+    
     <?php
+     #Open database
+    try {
+        //connection details for database held in config.ini file
+        //parse the ini file to retrieve connection details
+        $config = parse_ini_file("config.ini",true);
+        $host = $config['mysqlConnection']['host'];
+        $dbname = $config['mysqlConnection']['name'];
+        $user = $config['mysqlConnection']['user'];
+        $pass = $config['mysqlConnection']['pass'];
+        //create new PDO object using connection details
+        $db = new PDO("mysql:host=$host;dbname=$dbname",$user,$pass);
+        //we want PDO to throw an informative exception if there is a problem
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "select * from tags order by tag";
+        $stmt = $db->query($query);
+        $tagcount = $stmt->rowCount();
+        if ($tagcount == 0) {
+            echo "Sorry, no tags";
+            exit;
+        } else {
+            printf('<form action="deletetag.php" method="POST">');
+            printf('<div class="form-group">');
+            
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                //We add a checkbox for deleting tags.
+                $checkbox = '<input type="checkbox" name="tag[]" id="tag" value="'. urldecode($row["tagid"]) .'">';
+                $tagname = htmlentities($row["tag"]);
+                printf('<label class="checkbox-inline">%s %s </label>',
+                $checkbox,
+                $tagname
+                );             
+            }
+            printf('</div>');
+            printf('<button type="submit" class= "btn btn-primary" name="submit">Submit</button>');
+            printf('</form>');
+        }
+    
+    } catch (PDOException $e) {
+            printf("We have a problem: %s\n ", $e->getMessage());
+    }
+    
     $query = "select * from favourites ";
     $orderbyclause = " order by title";
     if(!isset($_POST['submit'])) {
