@@ -64,8 +64,8 @@
                     $tag_string .= $row2['tag'];
                 }
                 //We add an anchor tag for playing the video
-                $checkbox = '<input type="checkbox" name="favourite" id="favourite" value="'. urldecode($row["favourite_id"]) .'">';
                 $title = htmlentities($row["title"]);
+                $checkbox = '<input type="checkbox" name="favourite" id="favourite" value="'. urldecode($row["favourite_id"]).'">';
                 $playanchor = '<a href="http://www.youtube.com/watch?v='.urldecode($row["videoid"]). '" target=_blank> Play </a>';
                 //We add a checkbox for deleting favourites.
                 printf('<li class="list-group-item">%s %s %s %s</li>',
