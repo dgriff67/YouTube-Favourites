@@ -60,11 +60,10 @@
     } 
         
     else {
-        printf('<p>No favourite selected</p>', $title);
+        printf('<p>Please select a favourite to delete</p>');
         printf("<a href=searchfavourites.php> Search Favourites</a>");
 
-    echo "You did not choose a favourite.";
-
+    
     }
 
 ?>

@@ -73,7 +73,7 @@ foreach ($name as $favourite){
     }
     ?>
     
-            <button type="submit" class= btn btn-default" name="submit">Submit</button>
+            <button type="submit" class= "btn btn-primary" name="submit">Submit</button>
     </form>
    </body>
 </html>

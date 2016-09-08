@@ -11,7 +11,7 @@ $htmlBody = <<<END
         <label for="maxResults">Max Results:</label>
         <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="5">
     </div>
-    <button type="submit" class="btn btn-default">Search</button>
+    <button type="submit" class="btn btn-primary">Search</button>
 </form>
 END;
 
@@ -69,7 +69,7 @@ require_once '.\vendor\autoload.php';
                 $videos
             </ul>
         </div>
-        <button type="submit" class="btn btn-default">Add Favourite</button>
+        <button type="submit" class="btn btn-primary">Add Favourite</button>
     </form>
 
 END;

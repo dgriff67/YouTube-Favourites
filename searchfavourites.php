@@ -17,6 +17,7 @@
         </div>
             <button type="submit" class= "btn btn-primary" name="submit">Submit</button>
     </form>
+    <br>
     <?php
     $query = "select * from favourites ";
     $orderbyclause = " order by title";

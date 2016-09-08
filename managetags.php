@@ -15,7 +15,7 @@
         <label for="tag">New Tag:</label>
         <input type="text" class="form-control" name="tag" placeholder="Enter New Tag">
     </div>
-        <button type="submit" class= btn btn-default" name="submit">Add</button>
+        <button type="submit" class= "btn btn-primary" name="submit">Add</button>
     </form>
    
     <?php
@@ -58,7 +58,7 @@
     } catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
     }
-    printf('<button type="submit" class= btn btn-default" name="delete">Delete</button>');
+    printf('<button type="submit" class= "btn btn-danger" name="delete">Delete</button>');
     
     ?>
   </body>
