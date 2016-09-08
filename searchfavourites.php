@@ -15,16 +15,19 @@
             <label for="searchtitle">Search:</label>
             <input type="text" class="form-control" name="searchtitle" placeholder="Enter Search Term">
         </div>
-            <button type="submit" class= btn btn-default" name="submit">Submit</button>
+            <button type="submit" class= "btn btn-primary" name="submit">Submit</button>
     </form>
     <?php
     $query = "select * from favourites ";
+    $orderbyclause = " order by title";
     if(!isset($_POST['submit'])) {
         echo "Please enter a search term or just hit 'Submit' to see all your favourites";
         exit;
+    } elseif ((isset($_POST['submit'])) && ((!isset($_POST['searchtitle'])) || (empty($_POST['searchtitle'])))) {
+        $query .= $orderbyclause;
     } elseif ((isset($_POST['searchtitle'])) && (!empty($_POST['searchtitle']))) {
         $whereclause = "where title like '%" . addslashes($_POST['searchtitle']) . "%'";
-        $query = $query . $whereclause;
+        $query .= $whereclause . $orderbyclause;
     }
     #Open database
     try {
@@ -73,13 +76,13 @@
             }
             printf('</ul>');
             printf('</div>');
+            
         }
     } catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
     }
-    printf('<button type="submit" class= btn btn-default" name="submit">Delete</button>');
-    //printf('<tr><td></td><td><INPUT type="submit" name="delete" value="Delete"></td></tr>');
-    
+    printf('<button type="submit" class= "btn btn-danger" name="submit">Delete</button>');
+   printf('</form>');
     ?>
   </body>
 </html>
