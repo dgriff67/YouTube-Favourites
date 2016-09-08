@@ -15,7 +15,14 @@
         $db = new PDO("mysql:host=$host;dbname=$dbname",$user,$pass);
         //we want PDO to throw an informative exception if there is a problem
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        //we are going to use prepared statements for clean coding and to defend against SQL injection
+        //First we need to delete all favourite_tags with this tagid
+        $stmt = $db->prepare("DELETE from favourite_tags where tagid_FK = :tagid"); 
+        foreach ($name as $tag){
+            $stmt->execute(array(
+            ":tagid" => $tag)
+            );
+        }
+        
         $stmt = $db->prepare("delete from tags where tagid = :tagid");  
                         
             foreach ($name as $tag){
