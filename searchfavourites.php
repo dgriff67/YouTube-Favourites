@@ -59,17 +59,43 @@
             printf("We have a problem: %s\n ", $e->getMessage());
     }
     
-    $query = "select * from favourites ";
+    //$query = "select * from favourites ";
+    $query = "SELECT DISTINCT favourite_id, title, videoid FROM favourites ". 
+    "INNER JOIN favourite_tags ON favourites.favourite_id = favourite_tags.favouriteid_FK ";
+    $whereclause = "";
     $orderbyclause = " order by title";
     if(!isset($_POST['submit'])) {
-        echo "Please enter a search term or just hit 'Submit' to see all your favourites";
+        echo "Please enter a 'Search Term', or choose one or more 'Tags', or just hit 'Submit' to see all your favourites";
         exit;
-    } elseif ((isset($_POST['submit'])) && ((!isset($_POST['searchtitle'])) || (empty($_POST['searchtitle'])))) {
+    } elseif ((!isset($_POST['searchtitle']) OR (empty($_POST['searchtitle']))) && ((!isset($_POST['tag'])) OR (empty($_POST['tag'])))) {
+        //echo "no title no tags";
         $query .= $orderbyclause;
-    } elseif ((isset($_POST['searchtitle'])) && (!empty($_POST['searchtitle']))) {
+    } elseif ((isset($_POST['searchtitle']) && (!empty($_POST['searchtitle']))) && ((!isset($_POST['tag'])) OR (empty($_POST['tag'])))) {
+        //echo "title is set no tags";
         $whereclause = "where title like '%" . addslashes($_POST['searchtitle']) . "%'";
         $query .= $whereclause . $orderbyclause;
+    } elseif ((!isset($_POST['searchtitle']) OR (empty($_POST['searchtitle']))) && ((isset($_POST['tag'])) && (!empty($_POST['tag'])))) {
+        //echo "tag is set";
+        $name = $_POST['tag'];
+        $whereclause = "where ";
+        foreach ($name as $tag){
+            ($whereclause !== "where ") && ($whereclause .= " OR ");
+            $whereclause .= "((favourite_tags.tagid_FK)=".$tag.")";
+        }
+        $query .= $whereclause . $orderbyclause;
+    } elseif ((isset($_POST['searchtitle']) && (!empty($_POST['searchtitle']))) && ((isset($_POST['tag'])) && (!empty($_POST['tag'])))) {
+        //echo "title and tags are set";
+        $name = $_POST['tag'];
+        $whereclause = "where ";
+        foreach ($name as $tag){
+            ($whereclause !== "where ") && ($whereclause .= " OR ");
+            $whereclause .= "((favourite_tags.tagid_FK)=".$tag.")";
+        }
+        $whereclause .= " AND title like '%" . addslashes($_POST['searchtitle']) . "%'";
+        $query .= $whereclause . $orderbyclause;
+        
     }
+    //echo $query;
     #Open database
     try {
         //connection details for database held in config.ini file
@@ -86,7 +112,7 @@
         $sth = $db->query($query);
         $favouritecount = $sth->rowCount();
         if ($favouritecount == 0) {
-            echo "Sorry, no favourites matching your search term";
+            echo "Sorry, no favourites matching your search";
             exit;
         } else {
             //echo "We found " . $favouritecount . " favourites matching your search term!";
@@ -123,7 +149,7 @@
             printf("We have a problem: %s\n ", $e->getMessage());
     }
     printf('<button type="submit" class= "btn btn-danger" name="submit">Delete</button>');
-   printf('</form>');
+    printf('</form>');
     ?>
   </body>
 </html>
