@@ -49,15 +49,35 @@ require_once '.\vendor\autoload.php';
     $videos = '';
     $channels = '';
     $playlists = '';
+    //connection details for database held in config.ini file
+    //parse the ini file to retrieve connection details
+    $config = parse_ini_file("config.ini",true);
+    $host = $config['mysqlConnection']['host'];
+    $dbname = $config['mysqlConnection']['name'];
+    $user = $config['mysqlConnection']['user'];
+    $pass = $config['mysqlConnection']['pass'];
+    //create new PDO object using connection details
+    $db = new PDO("mysql:host=$host;dbname=$dbname",$user,$pass);
+    //we want PDO to throw an informative exception if there is a problem
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $stmt = $db->prepare("select * from favourites where videoid like :videoid");           
 
     // Add each result to the appropriate list, and then display the lists of
     // matching videos. We are not interested in channels and plylists here 
     foreach ($searchResponse['items'] as $searchResult) {
       switch ($searchResult['id']['kind']) {
-        case 'youtube#video':  
-          $videos .= sprintf(' <li class="list-group-item"><input type="radio" name="favourite[]" id="favourite" value="%s:%s"> %s (%s)</li>', $searchResult['snippet']['title'], $searchResult['id']['videoId'], $searchResult['snippet']['title'],    
-          "<a href=http://www.youtube.com/watch?v=".$searchResult['id']['videoId']." target=_blank> Watch This Video</a>"); 
-          break;  
+        case 'youtube#video':
+            //Lets check yo see if this video is already a favourite
+            $stmt->execute(array(
+                        ":videoid" => "%".$searchResult['id']['videoId']."%"
+                        ));
+            $isafavourite = "";
+            if ($stmt->rowCount()>0) {
+                $isafavourite = "<strong>#favourite</strong>";
+            }
+            $videos .= sprintf(' <li class="list-group-item"><input type="radio" name="favourite[]" id="favourite" value="%s:%s"> %s %s (%s)</li>', $searchResult['snippet']['title'],  $searchResult['id']['videoId'], $searchResult['snippet']['title'], $isafavourite,    
+            "<a href=http://www.youtube.com/watch?v=".$searchResult['id']['videoId']." target=_blank> Watch This Video</a>"); 
+            break;  
       }
     }
     //More Heredoc
@@ -79,6 +99,8 @@ END;
   } catch (Google_Exception $e) {
     $htmlBody .= sprintf('<p>An client error occurred: <code>%s</code></p>',
       htmlspecialchars($e->getMessage()));
+  } catch (PDOException $e) {
+            printf("We have a problem: %s\n ", $e->getMessage());
   }
 }
 ?>
