@@ -49,6 +49,7 @@ ALTER TABLE favourite_tags
 ADD FOREIGN KEY (favouriteid_FK)
 REFERENCES favourites(favourite_id);
 
+ALTER TABLE favourite_tags ADD CONSTRAINT favourite_tag UNIQUE(tagid_FK,favouriteid_FK);
 
 #Now lets create some favourite tag pairs
 
