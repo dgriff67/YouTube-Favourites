@@ -6,9 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+    
     <link href = "css/youtube_favourites.css" rel = "stylesheet">
   </head>
   <body>
+  <!--<script type="text/javascript">
+    $(function(){
+      alert("My First Jquery Test");
+   });
+    </script>-->
+ <script type="text/javascript">
+ $(document).ready(function()) {
+    $(document).on("click", "btn_submit", function() {
+        var this_id = $(this).attr('id');
+        ajaxCall(this_id);
+    };
+    
+    function ajaxCall(this_id) {
+        var data = 'id=' + this_id;
+
+        $.ajax({
+            url: 'editexistingfavourite.php',  
+            type: "POST",
+            data: data,
+            cache: false,
+            success: function (html) {
+                <!--DO WHAT EVER YOU WANT WITH THE RETURNED html-->
+            })   
+        };
+    }
+}
+ </script>
+ 
     <h3>Search Your YouTube Favourites</h3>
     <form action="searchfavourites.php" method="POST">
         <div class="form-group">
@@ -116,7 +146,8 @@
             exit;
         } else {
             //echo "We found " . $favouritecount . " favourites matching your search term!";
-            printf('<form action="deletefavourite.php" method="POST">');
+            //printf('<form action="deletefavourite.php" method="POST">');
+            printf('<form action="editexistingfavourite.php" method="POST">');
             printf('<div class="form-group">');
             printf('<ul class="list-group">');
             while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
@@ -148,7 +179,8 @@
     } catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
     }
-    printf('<button type="submit" class= "btn btn-danger" name="submit">Delete</button>');
+    printf('<button type="submit" class= "btn btn-primary" id="Edit" name="btn_submit" value="Edit">Edit</button>');
+    printf('<button type="submit" class= "btn btn-danger" id="Delete" name="btn_submit" value="Delete">Delete</button>');
     printf('</form>');
     ?>
   </body>
