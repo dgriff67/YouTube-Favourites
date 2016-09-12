@@ -13,7 +13,7 @@ foreach ($name as $favourite){
 <!doctype html>
 <html>
   <head>
-    <title>Edit New YouTube Favourite</title>
+    <title>Edit Your YouTube Favourite</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -21,7 +21,7 @@ foreach ($name as $favourite){
     <link href = "css/youtube_favourites.css" rel = "stylesheet">
   </head>
   <body>
-    <h3>Edit Your New YouTube Favourite</h3>
+    <h3>Edit Your YouTube Favourite</h3>
     <form action="addfavourite.php" method="POST">
         <div class="form-group">
             <textarea cols="30" rows="3" class="form-control" name="edittedtitle"><?php echo $title ?></textarea>
