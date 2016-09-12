@@ -147,7 +147,7 @@
         } else {
             //echo "We found " . $favouritecount . " favourites matching your search term!";
             //printf('<form action="deletefavourite.php" method="POST">');
-            printf('<form action="editexistingfavourite.php" method="POST">');
+            printf('<form action="processfavourite.php" method="POST">');
             printf('<div class="form-group">');
             printf('<ul class="list-group">');
             while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
@@ -163,11 +163,12 @@
                 }
                 //We add an anchor tag for playing the video
                 $title = htmlentities($row["title"]);
-                $checkbox = '<input type="checkbox" name="favourite" id="favourite" value="'. urldecode($row["favourite_id"]).'">';
+                $favourite_id = urldecode($row["favourite_id"]);
+                $radiobutton = sprintf('<input type="radio" name="favourite" id="favourite" value="%s|%s">', $title, $favourite_id);
                 $playanchor = '<a href="http://www.youtube.com/watch?v='.urldecode($row["videoid"]). '" target=_blank> Play </a>';
-                //We add a checkbox for deleting favourites.
+                //We add a radio button for deleting favourites.
                 printf('<li class="list-group-item">%s %s %s %s</li>',
-                $checkbox,
+                $radiobutton,
                 $title,
                 '<strong>' . $tag_string. '</strong>',
                 $playanchor);             
