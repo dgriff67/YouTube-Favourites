@@ -48,7 +48,7 @@ if((isset($_POST['edittedtitle'])) && (isset($_POST['videoid']))) {
                 }
             } 
             //Now let's check for new tags
-            if (isset($_POST['newtags'])) {
+            if ((isset($_POST['newtags']))&& (!empty($_POST['newtags']))) {
                 //if not tags selected we set this variable to empty
                 $newtags = $_POST['newtags'];
                 $newtag = array_map('trim', explode(',', $newtags));
