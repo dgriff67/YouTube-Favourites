@@ -1,18 +1,19 @@
 <?php
+include("includes/nav-menu.php");
 //Heredoc
 $htmlBody = <<<END
-<h3>Search YouTube</h3>
-<form method="GET">
-    <div class="form-group" class="col-xs-4">
-        <label for="q">Search:</label>
-        <input type="text" class="form-control" id="q" name="q" placeholder="Enter Search Term">
-    </div>
-    <div class="form-group">
-        <label for="maxResults">Max Results:</label>
-        <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="5">
-    </div>
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
+    <h3>Search YouTube</h3>
+    <form method="GET">
+        <div class="form-group" class="col-xs-4">
+            <label for="q">Search YouTube:</label>
+            <input type="text" class="form-control" id="q" name="q" placeholder="Enter Search Term">
+        </div>
+        <div class="form-group">
+            <label for="maxResults">Max Results:</label>
+            <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="5">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
 END;
 
 // This code will execute if the user entered a search query in the form
@@ -91,7 +92,6 @@ require_once '.\vendor\autoload.php';
         </div>
         <button type="submit" class="btn btn-primary">Add Favourite</button>
     </form>
-
 END;
   } catch (Google_Service_Exception $e) {
     $htmlBody .= sprintf('<p>A service error occurred: <code>%s</code></p>',
@@ -121,6 +121,7 @@ END;
     
   </head>
   <body>
+    <?php echo $navbar?>
     <?php echo $htmlBody?>
   </body>
 </html>
