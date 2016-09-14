@@ -90,7 +90,7 @@ require_once '.\vendor\autoload.php';
                 $videos
             </ul>
         </div>
-        <button type="submit" class="btn btn-primary">Add Favourite</button>
+        <button type="submit" class="btn btn-primary" id="Add_Favourite" name="btn_submit">Add Favourite</button>
     </form>
 END;
   } catch (Google_Service_Exception $e) {
@@ -124,4 +124,26 @@ END;
     <?php echo $navbar?>
     <?php echo $htmlBody?>
   </body>
+   <script type="text/javascript">
+ $(document).ready(function()) {
+    $(document).on("click", "btn_submit", function() {
+        var this_id = $(this).attr('id');
+        ajaxCall(this_id);
+    };
+    
+    function ajaxCall(this_id) {
+        var data = 'id=' + this_id;
+
+        $.ajax({
+            url: 'editfavourite.php',  
+            type: "POST",
+            data: data,
+            cache: false,
+            success: function (html) {
+                <!--DO WHAT EVER YOU WANT WITH THE RETURNED html-->
+            })   
+        };
+    }
+}
+ </script>
 </html>
