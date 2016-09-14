@@ -1,4 +1,6 @@
 <?php
+include("includes/nav-menu.php");
+
 $htmlBody="";
 
 if((isset($_POST['edittedtitle'])) && (isset($_POST['favourite_id']))) {
@@ -80,6 +82,7 @@ if((isset($_POST['edittedtitle'])) && (isset($_POST['favourite_id']))) {
     <link href = "css/youtube_favourites.css" rel = "stylesheet">
   </head>
   <body>
+    <?php echo $navbar?>
     <?php echo $htmlBody?>
   </body>
 </html>
