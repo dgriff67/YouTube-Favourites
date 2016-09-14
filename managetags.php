@@ -1,4 +1,5 @@
 <?php
+include("includes/nav-menu.php");
 $htmlBody="";
 $htmlBody.=<<<END
   <h3>Manage Your Favourites Tags</h3>
@@ -61,6 +62,7 @@ END;
     <link href = "css/youtube_favourites.css" rel = "stylesheet">
   </head>
   <body>
+    <?php echo $navbar?>
     <?php echo $htmlBody?>
   </body>
 </html>
