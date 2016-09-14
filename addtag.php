@@ -4,13 +4,10 @@ include("includes/nav-menu.php");
 $htmlBody="";
 
 if ((!isset($_POST['tag'])) || ($_POST['tag']=="")) {
-    $htmlBody.=<<<END
-    <h3>Slight Problem</h3>
-    <p>Please enter new tag</p>"
-    <a href=managetags.php> Manage Tags</a>
-END;
+   header("Location: managetags.php");
+   exit;
 }
-else if (str_word_count($_POST['tag'])>1) {
+if (str_word_count($_POST['tag'])>1) {
     $htmlBody.=<<<END
     <h3>Slight Problem</h3>
     <p>Single word tags only please</p>
