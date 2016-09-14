@@ -120,8 +120,7 @@ if(isset($_POST['submit'])) {
             $sth = $db->query($query);
             $favouritecount = $sth->rowCount();
             if ($favouritecount == 0) {
-                echo "Sorry, no favourites matching your search";
-                exit;
+                $htmlBody.= "<p>Sorry, no favourites matching your search term and/or with these tags<p>";
             } else {
 $htmlBody.=<<<END
                 <form action="processfavourite.php" method="POST">
@@ -154,17 +153,14 @@ END;
 $htmlBody.=<<<END
                 </ul>
             </div>
+            <button type="submit" class= "btn btn-primary" id="Edit" name="btn_submit" value="Edit">Edit</button>
+            <button type="submit" class= "btn btn-danger" id="Delete" name="btn_submit" value="Delete">Delete</button>
+        </form>
 END;
             }
         } catch (PDOException $e) {
                 printf("We have a problem: %s\n ", $e->getMessage());
         }
-
-$htmlBody.=<<<END
-        <button type="submit" class= "btn btn-primary" id="Edit" name="btn_submit" value="Edit">Edit</button>
-        <button type="submit" class= "btn btn-danger" id="Delete" name="btn_submit" value="Delete">Delete</button>
-        </form>
-END;
 } else {
     //No search results if submit not set
 }
