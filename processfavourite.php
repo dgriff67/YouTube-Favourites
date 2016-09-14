@@ -1,5 +1,6 @@
 
 <?php
+include("includes/nav-menu.php");
 //Let's check to see if a favourite is selected - if not we give a link back
 $title = "";
 $htmlBody = "";
@@ -152,8 +153,12 @@ END;
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href = "css/youtube_favourites.css" rel = "stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
   </head>
   <body>
+    <?php echo $navbar?>
     <?php echo $htmlBody?>
 </body>
 </html>
