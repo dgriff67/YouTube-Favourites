@@ -1,24 +1,19 @@
-  <head>
-    <title>Search YouTube Favourites</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
-    <link href = "css/youtube_favourites.css" rel = "stylesheet">
-  </head>
-  <body>
-  
-
 <?php
+$htmlBody="";
+
 if ((!isset($_POST['tag'])) || ($_POST['tag']=="")) {
-    printf("<h3>Slight Problem</h3>");
-    printf("<p>Please enter new tag</p>");
-    printf("<a href=managetags.php> Manage Tags</a>");
+    $htmlBody.=<<<END
+    <h3>Slight Problem</h3>
+    <p>Please enter new tag</p>"
+    <a href=managetags.php> Manage Tags</a>
+END;
 }
 else if (str_word_count($_POST['tag'])>1) {
-    printf("<h3>Slight Problem</h3>");
-    printf("<p>Single word tags only please</p>");
-    printf("<a href=managetags.php> Manage Tags</a>");
+    $htmlBody.=<<<END
+    <h3>Slight Problem</h3>
+    <p>Single word tags only please</p>
+    <a href=managetags.php> Manage Tags</a>
+END;
 }
     else if ((isset($_POST['tag'])) && (str_word_count($_POST['tag'])<2)) {
         try {
@@ -38,10 +33,13 @@ else if (str_word_count($_POST['tag'])>1) {
         $stmt->execute();
         
         $stmt->closeCursor();
-        printf("<h3>Success!</h3>");
-        printf("<p>Your new tag '". $_POST['tag'] . "' has been added</p>");
-        printf("<a href=managetags.php> Manage Tags</a>");
-        } 
+        $newtag=$_POST['tag'];
+        $htmlBody.=<<<END
+        <h3>Success!</h3>
+        <p>Your new tag "$newtag" has been added</p>
+        <a href=managetags.php>Manage Tags</a>
+END;
+} 
         catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
         }
@@ -49,10 +47,20 @@ else if (str_word_count($_POST['tag'])>1) {
         
     else {
 
-    echo "You did not choose a favourite.";
+    echo "We have a problem.";
 
     }
 
 ?>
-  </body>
+ <head>
+    <title>Search YouTube Favourites</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href = "css/youtube_favourites.css" rel = "stylesheet">
+</head>
+    <body>
+            <?php echo $htmlBody?>
+    </body>
 </html>
