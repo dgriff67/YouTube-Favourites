@@ -1,4 +1,5 @@
 <?php
+$htmlBody = "";
 $name = $_POST['favourite'];
 $title = "";
 $videoid = "";
@@ -8,31 +9,19 @@ foreach ($name as $favourite){
  $videoid = htmlentities(substr($favourite,-11));
 }
 //echo $title;
-?>
-
-<!doctype html>
-<html>
-  <head>
-    <title>Edit Your YouTube Favourite</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
-    <link href = "css/youtube_favourites.css" rel = "stylesheet">
-  </head>
-  <body>
-    <h3>Edit Your YouTube Favourite</h3>
+$htmlBody.=<<<END
+<h3>Edit Your YouTube Favourite</h3>
     <form action="addfavourite.php" method="POST">
         <div class="form-group">
-            <textarea cols="30" rows="3" class="form-control" name="edittedtitle"><?php echo $title ?></textarea>
-            <input type="hidden" name="videoid" value="<?php echo $videoid ?>">
+            <textarea cols="30" rows="3" class="form-control" name="edittedtitle">$title</textarea>
+            <input type="hidden" name="videoid" value="$videoid">
         </div>
         <div class="form-group" class="col-xs-4">
             <label for="newtags">New tag:</label>
             <input type="text" class="form-control" name="newtags" placeholder="Enter new tags, like: tag1, tag2">
         </div>
+END;
  
-    <?php
      #Open database
     try {
         //connection details for database held in config.ini file
@@ -53,26 +42,38 @@ foreach ($name as $favourite){
             //echo "Sorry, no tags matching your search term";
             //exit;
         } else {
-            printf('<div class="form-group">');
+            $htmlBody.='<div class="form-group">';
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 //We add a checkbox for deleting tags.
                 $checkbox = '<input type="checkbox" name="tag[]" id="tag" value="'. urldecode($row["tagid"]) .'">';
                 $tagname = htmlentities($row["tag"]);
                 //printf('<li class="list-group-item">%s %s </li>',
-                printf('<label class="checkbox-inline">%s %s </label>',
-                $checkbox,
-                $tagname
-                );             
+                $htmlBody.=sprintf('<label class="checkbox-inline">%s %s </label>', $checkbox,$tagname);             
             }
-            printf('</div>');
+            $htmlBody.=<<<END
+            '</div>'
+            <button type="submit" class= "btn btn-primary" name="submit">Submit</button>
+            </form>
+END;
         }
         
     } catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
     }
-    ?>
+?>
     
-            <button type="submit" class= "btn btn-primary" name="submit">Submit</button>
-    </form>
-   </body>
+
+<!doctype html>
+<html>
+  <head>
+    <title>Edit Your YouTube Favourite</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href = "css/youtube_favourites.css" rel = "stylesheet">
+  </head>
+    <body>
+        <?php echo $htmlBody?>
+    </body>
 </html>
