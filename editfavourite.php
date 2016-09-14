@@ -2,14 +2,29 @@
 include("includes/nav-menu.php");
 
 $htmlBody = "";
-$name = $_POST['favourite'];
+$name = "";
 $title = "";
 $videoid = "";
-foreach ($name as $favourite){
- $title = htmlentities(substr($favourite,0,-12));
- 
- $videoid = htmlentities(substr($favourite,-11));
-}
+If((!isset($_POST['favourite'])) && (!isset($_POST['btn_submit']))) {
+    header("Location: index.php");
+    exit;
+}  else if((isset($_POST['favourite'])) && (!isset($_POST['btn_submit']))) {
+    header("Location: index.php");
+    exit;
+} else if((!isset($_POST['favourite'])) && (isset($_POST['btn_submit']))) {
+    $htmlBody.= <<<END
+    <h3>No Video Selected</h3>
+    <p>Please select a video to add to favourites!</p>
+    <a href=index.php> Search Favourites</a>
+END;
+
+} else if ((isset($_POST['favourite'])) && (isset($_POST['btn_submit']))) {
+    $name = $_POST['favourite'];
+    foreach ($name as $favourite){
+     $title = htmlentities(substr($favourite,0,-12));
+     
+    $videoid = htmlentities(substr($favourite,-11));
+    }
 //echo $title;
 $htmlBody.=<<<END
 <h3>Edit Your YouTube Favourite</h3>
@@ -62,6 +77,7 @@ END;
     } catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
     }
+}
 ?>
     
 
