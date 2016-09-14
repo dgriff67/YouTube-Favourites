@@ -1,16 +1,5 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Update Favourite</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
-    <link href = "css/youtube_favourites.css" rel = "stylesheet">
-  </head>
-  <body>
-    <h3>Update Favourite</h3>
 <?php
+$htmlBody="";
 
 if((isset($_POST['edittedtitle'])) && (isset($_POST['favourite_id']))) {
     $title = $_POST['edittedtitle'];
@@ -64,8 +53,9 @@ if((isset($_POST['edittedtitle'])) && (isset($_POST['favourite_id']))) {
                 }  
             } 
             $stmt->closeCursor();
-            printf('<p>Congratulations you have added "%s"</p>', $title);
-            printf("<a href=searchfavourites.php> Search Favourites</a>");
+            $htmlBody.='<h3>Editted Favourite</h3>';
+            $htmlBody.=sprintf('<p>Congratulations you have editted "%s"</p>', $title);
+            $htmlBody.='<a href=searchfavourites.php> Search Favourites</a>';
         } 
         catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
@@ -79,5 +69,17 @@ if((isset($_POST['edittedtitle'])) && (isset($_POST['favourite_id']))) {
     }
 
 ?>
+<!doctype html>
+<html>
+  <head>
+    <title>Update Favourite</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href = "css/youtube_favourites.css" rel = "stylesheet">
+  </head>
+  <body>
+    <?php echo $htmlBody?>
   </body>
 </html>
