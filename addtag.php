@@ -1,4 +1,6 @@
 <?php
+include("includes/nav-menu.php");
+
 $htmlBody="";
 
 if ((!isset($_POST['tag'])) || ($_POST['tag']=="")) {
@@ -61,6 +63,8 @@ END;
     <link href = "css/youtube_favourites.css" rel = "stylesheet">
 </head>
     <body>
-            <?php echo $htmlBody?>
+        <?php echo $navbar?>
+        <?php echo $htmlBody?>
+        
     </body>
 </html>
