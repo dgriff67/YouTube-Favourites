@@ -1,16 +1,5 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Search YouTube Favourites</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
-    <link href = "css/youtube_favourites.css" rel = "stylesheet">
-  </head>
-  <body>
-    <h3>Add Favourite</h3>
 <?php
+$htmlBody = "";
 
 if((isset($_POST['edittedtitle'])) && (isset($_POST['videoid']))) {
     $title = $_POST['edittedtitle'];
@@ -65,8 +54,8 @@ if((isset($_POST['edittedtitle'])) && (isset($_POST['videoid']))) {
                 }  
             } 
             $stmt->closeCursor();
-            printf('<p>Congratulations you have added "%s"</p>', $title);
-            printf("<a href=searchfavourites.php> Search Favourites</a>");
+            $htmlBody.=sprintf('<p>Congratulations you have added "%s"</p>', $title);
+            $htmlBody.=sprintf("<a href=searchfavourites.php> Search Favourites</a>");
         } 
         catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
@@ -80,5 +69,21 @@ if((isset($_POST['edittedtitle'])) && (isset($_POST['videoid']))) {
     }
 
 ?>
+<!doctype html>
+<html>
+  <head>
+    <title>Search YouTube Favourites</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href = "css/youtube_favourites.css" rel = "stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  </head>
+  <body>
+    
+    <?php echo $htmlBody?>
   </body>
 </html>
