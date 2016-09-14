@@ -2,6 +2,11 @@
 include("includes/nav-menu.php");
 
 $htmlBody = "";
+If((!isset($_POST['edittedtitle'])) && (!isset($_POST['videoid'])) ){
+    header("Location: index.php");
+    exit;
+} 
+
 
 if((isset($_POST['edittedtitle'])) && (isset($_POST['videoid']))) {
     $title = $_POST['edittedtitle'];
