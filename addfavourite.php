@@ -1,4 +1,6 @@
 <?php
+include("includes/nav-menu.php");
+
 $htmlBody = "";
 
 if((isset($_POST['edittedtitle'])) && (isset($_POST['videoid']))) {
@@ -83,7 +85,7 @@ if((isset($_POST['edittedtitle'])) && (isset($_POST['videoid']))) {
   
   </head>
   <body>
-    
+    <?php echo $navbar?>
     <?php echo $htmlBody?>
   </body>
 </html>
