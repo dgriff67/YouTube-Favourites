@@ -1,4 +1,6 @@
 <?php
+include("includes/nav-menu.php");
+
 $htmlBody = "";
 $name = $_POST['favourite'];
 $title = "";
@@ -74,6 +76,7 @@ END;
     <link href = "css/youtube_favourites.css" rel = "stylesheet">
   </head>
     <body>
+        <?php echo $navbar?>
         <?php echo $htmlBody?>
     </body>
 </html>
