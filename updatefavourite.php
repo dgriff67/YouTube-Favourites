@@ -57,6 +57,7 @@ if((isset($_POST['edittedtitle'])) && (isset($_POST['favourite_id']))) {
             $stmt->closeCursor();
             $htmlBody.='<h3>Editted Favourite</h3>';
             $htmlBody.=sprintf('<p>Congratulations you have editted "%s"</p>', $title);
+            $htmlBody.='<a href=index.php>Search YouTube</a><br>';
             $htmlBody.='<a href=searchfavourites.php> Search Favourites</a>';
         } 
         catch (PDOException $e) {
