@@ -61,8 +61,10 @@ if((isset($_POST['edittedtitle'])) && (isset($_POST['videoid']))) {
                 }  
             } 
             $stmt->closeCursor();
-            $htmlBody.=sprintf('<p>Congratulations you have added "%s"</p>', $title);
-            $htmlBody.=sprintf("<a href=searchfavourites.php> Search Favourites</a>");
+            $htmlBody.=sprintf("<h3>Added Favourite</h3>");
+            $htmlBody.=sprintf('<p>Congratulations you have added "%s" to your Favourites</p>', $title);
+            $htmlBody.=sprintf("<a href=index.php>Search YouTube</a><br>");
+            $htmlBody.=sprintf("<a href=searchfavourites.php>Search Favourites</a>");
         } 
         catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
