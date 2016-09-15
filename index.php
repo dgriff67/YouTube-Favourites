@@ -1,12 +1,16 @@
 <?php
 include("includes/nav-menu.php");
 //Heredoc
+$searchterm = "";
+if (isset($_GET['q'])) {
+    $searchterm = $_GET['q'];
+}
 $htmlBody = <<<END
     <h3>Search YouTube</h3>
     <form method="GET">
         <div class="form-group" class="col-xs-4">
             <label for="q">Search YouTube:</label>
-            <input type="text" class="form-control" id="q" name="q" placeholder="Enter Search Term">
+            <input type="text" class="form-control" id="q" name="q" value="$searchterm" placeholder="Enter Search Term">
         </div>
         <div class="form-group">
             <label for="maxResults">Max Results:</label>
@@ -22,6 +26,7 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
   // Call set_include_path() as needed to point to your client library.
 //require_once '..\google\google-api-php-client-master\src\Google\Client.php';
 //require_once '..\google\google-api-php-client-master\src\Google\Service.php';
+//let's make the correct require_once call according to the native DIRECTORY_SEPARATOR
 if (DIRECTORY_SEPARATOR == '/') {
     require_once './vendor/autoload.php';
 }
