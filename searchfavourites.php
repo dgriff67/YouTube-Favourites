@@ -1,16 +1,16 @@
 <?php
 include("includes/nav-menu.php");
-//$searchedtext = '';
-//if(isset($_POST['searchtitle'])) {
-//    $searchedtext = 'value="'.$_POST['searchtitle'].'"';
-//}
+$searchtitle = '';
+if(isset($_POST['searchtitle'])) {
+    $searchtitle = $_POST['searchtitle'].'"';
+}
 
 $htmlBody = <<<END
 <h3>Search Favourites</h3>
     <form action="searchfavourites.php" method="POST">
         <div class="form-group">
             <label for="searchtitle">Search Your Favourites:</label>
-            <input type="text" class="form-control" name="searchtitle" placeholder="Enter Search Term">
+            <input type="text" class="form-control" name="searchtitle" value="$searchtitle" placeholder="Enter Search Term">
         </div>
 END;
 
