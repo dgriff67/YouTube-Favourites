@@ -21,9 +21,8 @@ END;
 } else if ((isset($_POST['favourite'])) && (isset($_POST['btn_submit']))) {
     $name = $_POST['favourite'];
     foreach ($name as $favourite){
-     $title = htmlentities(substr($favourite,0,-12));
-     
-    $videoid = htmlentities(substr($favourite,-11));
+     $title = substr(html_entity_decode($favourite),0,-12);
+    $videoid = substr(html_entity_decode($favourite),-11);
     }
 //echo $title;
 $htmlBody.=<<<END
@@ -68,7 +67,7 @@ END;
                 $htmlBody.=sprintf('<label class="checkbox-inline">%s %s </label>', $checkbox,$tagname);             
             }
             $htmlBody.=<<<END
-            '</div>'
+            </div>
             <button type="submit" class= "btn btn-primary" name="submit">Submit</button>
             </form>
 END;
