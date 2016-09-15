@@ -76,7 +76,7 @@ require_once '.\vendor\autoload.php';
             if ($stmt->rowCount()>0) {
                 $isafavourite = "<strong>#favourite</strong>";
             }
-            $videos .= sprintf(' <li class="list-group-item"><input type="radio" name="favourite[]" id="favourite" value="%s:%s"> %s %s (%s)</li>', $searchResult['snippet']['title'],  $searchResult['id']['videoId'], $searchResult['snippet']['title'], $isafavourite,    
+            $videos .= sprintf(' <li class="list-group-item"><input type="radio" name="favourite[]" id="favourite" value="%s:%s"> %s %s (%s)</li>', htmlentities($searchResult['snippet']['title']),  htmlentities($searchResult['id']['videoId']), $searchResult['snippet']['title'], $isafavourite,    
             "<a href=http://www.youtube.com/watch?v=".$searchResult['id']['videoId']." target=_blank> Play</a>"); 
             break;  
       }
