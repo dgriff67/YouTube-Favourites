@@ -1,3 +1,6 @@
+#Lets make sure we use the correct datbase
+USE davidmarkgriffiths_co_uk;
+
 #Lets drop and then create table favourites
 
 DROP TABLE IF EXISTS favourites;
@@ -10,7 +13,7 @@ videoid VARCHAR(20) NOT NULL
 
 #Now lets create some favourites
 
-INSERT INTO davidmarkgriffiths_co_uk.favourites VALUES
+INSERT INTO favourites VALUES
 (NULL, "Philip Glass - Act I Prelude (Akhnaten)", "6Ql8TidvZto"),
 (NULL, "J.S. Bach Cello Suites No.1-6 BWV 1007-1012", "REu2BcnlD34");
 
@@ -26,7 +29,7 @@ tag VARCHAR(100) NOT NULL
 
 #Now lets create some tags
 
-INSERT INTO davidmarkgriffiths_co_uk.tags VALUES
+INSERT INTO tags VALUES
 (NULL, "glass"),
 (NULL, "beethoven"),
 (NULL, "bach");
