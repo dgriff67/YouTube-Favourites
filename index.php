@@ -22,7 +22,14 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
   // Call set_include_path() as needed to point to your client library.
 //require_once '..\google\google-api-php-client-master\src\Google\Client.php';
 //require_once '..\google\google-api-php-client-master\src\Google\Service.php';
-require_once '.\vendor\autoload.php';
+if (DIRECTORY_SEPARATOR == '/') {
+    require_once './vendor/autoload.php';
+}
+if (DIRECTORY_SEPARATOR == '\\') {
+    require_once '.\vendor\autoload.php';
+}
+
+
 
   /*
    * Set $DEVELOPER_KEY to the "API key" value from the "Access" tab of the
