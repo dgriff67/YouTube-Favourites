@@ -63,7 +63,9 @@ if((isset($_POST['favourite'])) && ($_POST['btn_submit']=="Delete")) {
         $stmt2->closeCursor();
         $title = "Favourite successfully deleted";
         $htmlBody.= <<<END
-        <p>Favourite successfully deleted</p>
+        <h3>Deleted Favourite</h3>
+        <p>You have successfully deleted your favourite "$favouritetitle"</p>
+        <a href=index.php>Search YouTube</a><br>
         <a href=searchfavourites.php> Search Favourites</a>
 END;
         } 
