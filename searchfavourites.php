@@ -71,7 +71,7 @@ END;
     //$query = "select * from favourites ";
 if(isset($_POST['submit'])) {
         $query = "SELECT DISTINCT favourite_id, title, videoid FROM favourites ". 
-        "INNER JOIN favourite_tags ON favourites.favourite_id = favourite_tags.favouriteid_FK ";
+        "LEFT JOIN favourite_tags ON favourites.favourite_id = favourite_tags.favouriteid_FK ";
         $whereclause = "";
         $orderbyclause = " order by title";
         
