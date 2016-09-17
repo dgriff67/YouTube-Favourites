@@ -21,7 +21,7 @@ END;
 //So we know that both favourite and btn_submit are set
 
 if((isset($_POST['favourite'])) && ($_POST['btn_submit']=="Delete")) {
-    $favourite_tokens = explode("|",$_POST['favourite']);
+    $favourite_tokens = explode("¬",$_POST['favourite']);
     $favouritetitle = $favourite_tokens[0];
     $favourite_id = $favourite_tokens[1];
     
@@ -75,7 +75,7 @@ END;
     } 
     
 if ((isset($_POST['favourite'])) && ($_POST['btn_submit']=="Edit")) {
-    $favourite_tokens = explode("|",$_POST['favourite']);
+    $favourite_tokens = explode("¬",$_POST['favourite']);
     $favouritetitle = $favourite_tokens[0];
     $favourite_id = $favourite_tokens[1];
     
