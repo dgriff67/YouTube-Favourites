@@ -25,13 +25,13 @@
         
         $stmt = $db->prepare("delete from tags where tagid = :tagid");  
                         
-            foreach ($name as $tag){
-                $stmt->execute(array(
-                ":tagid" => $tag)
-                );
-            }
-            $stmt->closeCursor();
-            header("Location: managetags.php");
+        foreach ($name as $tag){
+            $stmt->execute(array(
+            ":tagid" => $tag)
+            );
+        }
+        $stmt->closeCursor();
+        header("Location: managetags.php");
         } 
         catch (PDOException $e) {
             printf("We have a problem: %s\n ", $e->getMessage());
