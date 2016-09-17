@@ -1,9 +1,14 @@
 <?php
 include("includes/nav-menu.php");
 $searchtitle = '';
+$maxResults = 5;
 if(isset($_POST['searchtitle'])) {
     $searchtitle = $_POST['searchtitle'].'"';
 }
+if(isset($_POST['maxResults'])) {
+    $maxResults = $_POST['maxResults'].'"';
+} 
+
 
 $htmlBody = <<<END
 <h3>Search Favourites</h3>
@@ -11,6 +16,10 @@ $htmlBody = <<<END
         <div class="form-group">
             <label for="searchtitle">Search Your Favourites:</label>
             <input type="text" class="form-control" name="searchtitle" value="$searchtitle" placeholder="Enter Search Term">
+        </div>
+        <div class="form-group">
+            <label for="maxResults">Max Results:</label>
+            <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="$maxResults">
         </div>
 END;
 
@@ -65,18 +74,22 @@ END;
 $query = "SELECT DISTINCT favourite_id, title, videoid FROM favourites ". 
 "LEFT JOIN favourite_tags ON favourites.favourite_id = favourite_tags.favouriteid_FK ";
 $whereclause = "";
-$orderbyclause = " order by favourite_id DESC";           
+$orderbyclause = " order by favourite_id DESC";
+$limitbyclause = " limit 5";
+
         
 if(!isset($_POST['submit'])) {
-    $query.=$orderbyclause;
+    $query.=$orderbyclause . $limitbyclause;
 } else {
+    //echo $_POST['maxResults'];
+    $limitbyclause = " limit ".$_POST['maxResults'];
     if ((!isset($_POST['searchtitle']) OR (empty($_POST['searchtitle']))) && ((!isset($_POST['tag'])) OR (empty($_POST['tag'])))) {
         //echo "no title no tags";
-        $query .= $orderbyclause;
+        $query .= $orderbyclause . $limitbyclause;
     } elseif ((isset($_POST['searchtitle']) && (!empty($_POST['searchtitle']))) && ((!isset($_POST['tag'])) OR (empty($_POST['tag'])))) {
         //echo "title is set no tags";
         $whereclause = "where title like '%" . addslashes($_POST['searchtitle']) . "%'";
-        $query .= $whereclause . $orderbyclause;
+        $query .= $whereclause . $orderbyclause . $limitbyclause;
     } elseif ((!isset($_POST['searchtitle']) OR (empty($_POST['searchtitle']))) && ((isset($_POST['tag'])) && (!empty($_POST['tag'])))) {
         //echo "tag is set";
         $name = $_POST['tag'];
@@ -85,7 +98,7 @@ if(!isset($_POST['submit'])) {
             ($whereclause !== "where ") && ($whereclause .= " OR ");
             $whereclause .= "((favourite_tags.tagid_FK)=".$tag.")";
         }
-        $query .= $whereclause . $orderbyclause;
+        $query .= $whereclause . $orderbyclause . $limitbyclause;
     } elseif ((isset($_POST['searchtitle']) && (!empty($_POST['searchtitle']))) && ((isset($_POST['tag'])) && (!empty($_POST['tag'])))) {
         //echo "title and tags are set";
         $name = $_POST['tag'];
@@ -95,7 +108,7 @@ if(!isset($_POST['submit'])) {
             $whereclause .= "((favourite_tags.tagid_FK)=".$tag.")";
         }
         $whereclause .= " AND title like '%" . addslashes($_POST['searchtitle']) . "%'";
-        $query .= $whereclause . $orderbyclause; 
+        $query .= $whereclause . $orderbyclause . $limitbyclause; 
     }
 }
     #Open database
