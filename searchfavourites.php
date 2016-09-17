@@ -21,6 +21,13 @@ $htmlBody = <<<END
             <label for="maxResults">Max Results:</label>
             <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="$maxResults">
         </div>
+        <div class="form-group">
+            <label for="Sort">Sort option:</label>
+            <select name="sortOption" class="form-control" id="Sort">
+                <option value="N">Newest First</option>
+                <option value="A">Alphabetical</option>
+            </select>
+        </div>
 END;
 
 #Open database
@@ -83,6 +90,9 @@ if(!isset($_POST['submit'])) {
 } else {
     //echo $_POST['maxResults'];
     $limitbyclause = " limit ".$_POST['maxResults'];
+    if ($_POST['sortOption']=="A") {
+        $orderbyclause = "order by title";
+    } 
     if ((!isset($_POST['searchtitle']) OR (empty($_POST['searchtitle']))) && ((!isset($_POST['tag'])) OR (empty($_POST['tag'])))) {
         //echo "no title no tags";
         $query .= $orderbyclause . $limitbyclause;
