@@ -141,7 +141,7 @@ END;
                     //We add an anchor tag for playing the video
                     $title = htmlentities($row["title"]);
                     $favourite_id = urldecode($row["favourite_id"]);
-                    $radiobutton = sprintf('<input type="radio" name="favourite" id="favourite" value="%s|%s">', $title, $favourite_id);
+                    $radiobutton = sprintf('<input type="radio" name="favourite" id="favourite" value="%s¬%s">', $title, $favourite_id);
                     $playanchor = '<a href="http://www.youtube.com/watch?v='.urldecode($row["videoid"]). '" target=_blank> Play </a>';
                     //We add a radio button for deleting favourites.
                     $htmlBody.=sprintf('<li class="list-group-item">%s %s %s %s</li>',
