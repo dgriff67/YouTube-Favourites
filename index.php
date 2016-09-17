@@ -5,6 +5,11 @@ $searchterm = "";
 if (isset($_GET['q'])) {
     $searchterm = $_GET['q'];
 }
+$maxResults = 5;
+if(isset($_GET['maxResults'])) {
+    $maxResults = $_GET['maxResults'].'"';
+} 
+
 $htmlBody = <<<END
     <h3>Search YouTube</h3>
     <form method="GET">
@@ -14,7 +19,7 @@ $htmlBody = <<<END
         </div>
         <div class="form-group">
             <label for="maxResults">Max Results:</label>
-            <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="5">
+            <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="$maxResults">
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
