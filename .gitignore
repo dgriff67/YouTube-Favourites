@@ -1,4 +1,7 @@
 *.ini
 *.lock
 /vendor
+/js
+deletefavourite.php
+addfavourite.php
 Database.php
