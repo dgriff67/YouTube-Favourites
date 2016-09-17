@@ -96,7 +96,7 @@ if (DIRECTORY_SEPARATOR == '\\') {
     //More Heredoc
     $htmlBody .= <<<END
     <h3>Videos</h3>
-    <form action="editfavourite.php" method = "POST">
+    <form action="addedfavourite.php" method = "POST">
         <div class="form-group">
             <ul class="list-group">
                 $videos
@@ -147,7 +147,7 @@ END;
         var data = 'id=' + this_id;
 
         $.ajax({
-            url: 'editfavourite.php',  
+            url: 'addedfavourite.php',  
             type: "POST",
             data: data,
             cache: false,
