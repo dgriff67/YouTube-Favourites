@@ -60,9 +60,36 @@ END;
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href = "css/youtube_favourites.css" rel = "stylesheet">
+    <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  
   </head>
   <body>
     <?php echo $navbar?>
     <?php echo $htmlBody?>
   </body>
+   <script type="text/javascript">
+ $(document).ready(function()) {
+    $(document).on("click", "delete", function() {
+        var this_id = $(this).attr('id');
+        ajaxCall(this_id);
+    };
+    
+    function ajaxCall(this_id) {
+        var data = 'id=' + this_id;
+
+        $.ajax({
+            url: 'deletetag.php',  
+            type: "POST",
+            data: data,
+            cache: false,
+            success: function (html) {
+                <!--DO WHAT EVER YOU WANT WITH THE RETURNED html-->
+            })   
+        };
+    }
+}
+ </script>
+
 </html>
